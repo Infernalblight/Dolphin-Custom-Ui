@@ -102,7 +102,21 @@ end
 addPlaceholderText(localPlayerFrame, "Local-Player Content")
 addPlaceholderText(movesetsFrame, "Movesets Content")
 addPlaceholderText(opFrame, "Op Content")
-addPlaceholderText(infoMiscFrame, "Info-Misc Content")
+
+-- Create "Un-Inject" Button in Info-Misc Tab
+local unInjectButton = Instance.new("TextButton")
+unInjectButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+unInjectButton.Position = UDim2.new(0.35, 0, 0.45, 0)
+unInjectButton.BackgroundColor3 = Color3.fromRGB(173, 216, 230) -- Light blue
+unInjectButton.Text = "Un-Inject"
+unInjectButton.TextScaled = true
+unInjectButton.Font = Enum.Font.GothamBold
+unInjectButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text
+unInjectButton.Parent = infoMiscFrame
+
+unInjectButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy() -- Closes the UI by deleting the ScreenGui
+end)
 
 -- Tab Switching Logic
 local function switchTab(tabName)
