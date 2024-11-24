@@ -131,3 +131,49 @@ game:GetService("UserInputService").JumpRequest:Connect(function()
         end
     end
 end)
+
+-- Noclip Functions
+local NoclipConnection = nil
+local Clip = true
+
+function noclip()
+	Clip = false
+	local function Nocl()
+		if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+			for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+					v.CanCollide = false
+				end
+			end
+		end
+		wait(0.21) -- basic optimization
+	end
+	NoclipConnection = game:GetService('RunService').Stepped:Connect(Nocl)
+end
+
+function clip()
+	if NoclipConnection then
+		NoclipConnection:Disconnect()
+	end
+	Clip = true
+	-- Reset character collision when noclip is turned off
+	local character = game.Players.LocalPlayer.Character
+	if character then
+		for _, part in pairs(character:GetDescendants()) do
+			if part:IsA('BasePart') then
+				part.CanCollide = true
+			end
+		end
+	end
+end
+
+-- Create the toggle for enabling/disabling Noclip
+LocalPlayerTab:CreateToggle("Enable Noclip", function(arg)
+    if arg then
+        noclip()  -- Enable Noclip
+        print("Noclip is now enabled.")
+    else
+        clip()  -- Disable Noclip and reset collision
+        print("Noclip is now disabled.")
+    end
+end)
