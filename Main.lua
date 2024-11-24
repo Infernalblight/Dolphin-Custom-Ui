@@ -108,3 +108,26 @@ LocalPlayerTab:CreateToggle("Enable JumpPower Repeat", function(arg)
         print("JumpPower repeat is now disabled, JumpPower set to 50.")
     end
 end)
+
+-- Infinite Jump Toggle Logic
+local InfiniteJumpEnabled = false  -- Default is off
+
+-- Create the toggle for enabling/disabling Infinite Jump
+LocalPlayerTab:CreateToggle("Enable Infinite Jump", function(arg)
+    InfiniteJumpEnabled = arg
+    if InfiniteJumpEnabled then
+        print("Infinite Jump is now enabled.")
+    else
+        print("Infinite Jump is now disabled.")
+    end
+end)
+
+-- Infinite Jump functionality
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if InfiniteJumpEnabled then
+        local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid:ChangeState("Jumping")  -- Force jump state to repeat the jump
+        end
+    end
+end)
