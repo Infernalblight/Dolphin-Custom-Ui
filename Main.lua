@@ -25,13 +25,10 @@ _G.CustomTheme = {
 
 local LocalPlayerTab = Library:CreateTab("Local-Player", "", true)
 
--- State to control if WalkSpeed should repeat
 local walkSpeedActive = false
-local lastWalkSpeed = 16 -- Default walk speed value
+local lastWalkSpeed = 16
 
--- Create the slider for WalkSpeed
 LocalPlayerTab:CreateSlider("WalkSpeed", 0, 600, function(arg)
-    -- Only change WalkSpeed if the repeat feature is active
     if walkSpeedActive then
         print("WalkSpeed is set to:", arg)
         local player = game.Players.LocalPlayer
@@ -39,17 +36,22 @@ LocalPlayerTab:CreateSlider("WalkSpeed", 0, 600, function(arg)
             player.Character.Humanoid.WalkSpeed = arg
             lastWalkSpeed = arg
         end
+    else
+        lastWalkSpeed = arg
     end
 end)
 
--- Create the toggle for enabling/disabling WalkSpeed repeating
 LocalPlayerTab:CreateToggle("Enable WalkSpeed Repeat", function(arg)
     if arg then
         walkSpeedActive = true
         print("WalkSpeed repeat is now enabled.")
+        
+        local player = game.Players.LocalPlayer
+        if player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.WalkSpeed = lastWalkSpeed
+        end
     else
         walkSpeedActive = false
-        -- Set WalkSpeed back to the default value (16)
         local player = game.Players.LocalPlayer
         if player.Character and player.Character:FindFirstChild("Humanoid") then
             player.Character.Humanoid.WalkSpeed = 16
