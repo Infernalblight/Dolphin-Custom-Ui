@@ -1,3 +1,7 @@
+
+
+
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/preztel/AzureLibrary/master/uilib.lua", true))()
 
 _G.CustomTheme = {
@@ -176,4 +180,12 @@ LocalPlayerTab:CreateToggle("Enable Noclip", function(arg)
         clip()  -- Disable Noclip and reset collision
         print("Noclip is now disabled.")
     end
+end)
+
+local MovesetTab = Library:CreateTab("Movesets", "", true)
+
+MovesetTab:CreateButton("Gojo !Need Saitama On!",  function()  --you dont need "arg" for a button
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/refs/heads/main/LatestV2.lua"))()
+    wait(1)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/main/Latest.lua"))()
 end)
